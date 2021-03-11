@@ -15,7 +15,7 @@
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
-
+    <style></style>
     <title>Hello, world!</title>
   </head>
   <body>
@@ -56,9 +56,9 @@
 
       function CardComponent({ asin, category, img, price, title }) {
         return `
-  <div class="col animate__animated animate__faster animate__fadeInUp m-3">
+  <div class="col-6 animate__animated animate__faster animate__fadeInUp m-3">
     <div class="card">
-      <img src="${img}" class="card-img-top" alt="...">
+      <img src="${img}" class="card-img-top img-fluid" alt="...">
       <div class="card-body">
         <h6 class="card-title">${title}</h6>
       </div>
