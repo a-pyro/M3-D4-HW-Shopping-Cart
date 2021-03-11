@@ -24,7 +24,9 @@ const shit = '💩',
             9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
             10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book) */
 const entryPoint = document.getElementById('entryPoint');
-let cart = [];
+const shoppingCartDom = document.getElementById('shoppingCartDom');
+
+let userCart = [];
 window.addEventListener('DOMContentLoaded', getData);
 
 async function getData() {
@@ -60,7 +62,7 @@ function CardComponent(asin, category, url, price, title) {
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Category: ${category}</li>
-        <li class="list-group-item">Asin: ${asin}</li>
+        <li class="list-group-item" data-attribute="${asin}">Asin: <span class="asin">${asin}</span></li>
         <li class="list-group-item">Price: ${price}€</li>
       </ul>
       <div class="card-body">
@@ -82,10 +84,21 @@ function addCardBtnsEventListeners() {
 }
 
 function addToCart(e) {
-  console.log(e.target);
   const card = e.target.closest('.card');
   card.classList.add('added-to-cart');
   //! animazioni e style
+  const asinDom = card.querySelector('.asin');
+  const asin = asinDom.innerText;
+  console.log(asin);
+  fetch(`https://striveschool-api.herokuapp.com/books/${asin}`)
+    .then((res) => res.json())
+    .then((data) => {
+      userCart.push(data);
+      console.log(userCart);
+      renderShoppingCart(userCart);
+      addDeleteEvent();
+    })
+    .catch((err) => console.log(err));
 }
 
 function skipBook(e) {
@@ -93,4 +106,39 @@ function skipBook(e) {
   const col = e.target.closest('.col');
   col.remove();
   // ! animazioni
+}
+
+function renderShoppingCart(userCart) {
+  shoppingCartDom.innerHTML = '';
+  userCart.forEach((book) => {
+    const { asin, category, img: url, price, title } = book;
+    shoppingCartDom.innerHTML += LiComponent(asin, category, url, price, title);
+  });
+}
+
+function LiComponent(asin = 0, category = '', url = '', price, title) {
+  return `
+    <li class="list-group-item"> Asin <span class="asin-cart">${asin}</span> <br> ${title} <br> ${price}€ <br><i class="fas fa-trash-alt"></i></li>
+  `;
+}
+
+function addDeleteEvent() {
+  const removeBtns = document.querySelectorAll('.fa-trash-alt');
+  removeBtns.forEach((btn) => btn.addEventListener('click', removeFromCart));
+}
+
+function removeFromCart(e) {
+  e.preventDefault();
+  console.log(e.target);
+  const li = e.target.closest('.list-group-item');
+  const asin = li.querySelector('.asin-cart');
+  const asinValue = asin.innerText;
+  console.log(asinValue);
+  const itemtoRemove = userCart.findIndex((book) => book.asin === asinValue);
+  userCart.splice(itemtoRemove, 1);
+  renderShoppingCart(userCart);
+  // update ui
+  const bookInUi = document.querySelector(`li[data-attribute="${asinValue}"]`);
+  const card = bookInUi.closest('.card');
+  card.classList.remove('added-to-cart');
 }
