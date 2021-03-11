@@ -112,6 +112,7 @@ h6 {
 
 .card {
   height: 100%;
+  cursor: pointer;
 }
 .card-img-top {
   height: 30vh;

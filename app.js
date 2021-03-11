@@ -12,9 +12,11 @@ const shoppingCartDom = document.getElementById('shoppingCartDom');
 const totalItems = document.getElementById('totalItems');
 const totalAmount = document.getElementById('totalAmount');
 const searchField = document.querySelector('.form-inline input');
+const deleteCartBtn = document.getElementById('deleteCartBtn');
 
 window.addEventListener('DOMContentLoaded', getData);
 searchField.addEventListener('keyup', filterBooks);
+deleteCartBtn.addEventListener('click', wipeCart);
 async function getData() {
   try {
     const res = await fetch('https://striveschool-api.herokuapp.com/books');
@@ -30,7 +32,7 @@ async function getData() {
 function renderData(data) {
   entryPoint.innerHTML = data.reduce((prev, book) => {
     const { asin, category, img: url, price, title } = book;
-    return prev + CardComponent(asin, category, url, price, title);
+    return prev + alternativeCard(asin, category, url, price, title);
   }, '');
 
   /* data.forEach((book) => {
@@ -49,7 +51,6 @@ function CardComponent(asin, category, url, price, title) {
       <img src="${url}" class="card-img-top" alt="...">
       <div class="card-body">
         <h6 class="card-title">${title}</h6>
-        <p class="card-text">Brief book description.</p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Category: ${category}</li>
@@ -64,6 +65,29 @@ function CardComponent(asin, category, url, price, title) {
       </div>
     </div>
   </div>
+  `;
+}
+
+function alternativeCard(asin, category, url, price, title) {
+  return `
+  <div class="card mb-3 mr-3 overflow-hidden" style="width: 540px; height: 28vh;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img class="img-fluid img-card-top" src="${url}" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${title}</h5>
+        <div class="btn-group">
+          <span class="asin d-none">${asin}</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary add-cart-btn">Cart</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary skip-btn">Skip</button>
+            <a href="details.html?asin=${asin}" class="btn btn-sm btn-outline-secondary">Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   `;
 }
 
@@ -95,8 +119,10 @@ function addToCart(e) {
 
 function skipBook(e) {
   console.log(e.target);
-  const col = e.target.closest('.col');
-  col.remove();
+  // const col = e.target.closest('.col');
+  const card = e.target.closest('.card.mb-3'); //alternative card
+
+  card.remove();
   // ! animazioni
 }
 
@@ -176,4 +202,12 @@ function filterBooks(e) {
   }
 
   if (!query) getData();
+}
+function wipeCart(e) {
+  // const listItemAsins = document.querySelectorAll('.asin');
+  const listItemAsins = document.querySelectorAll('.card.added-to-cart');
+  listItemAsins.forEach((item) => item.classList.remove('added-to-cart'));
+  userCart.length = 0;
+  shoppingCartDom.innerHTML = '';
+  calcTotalAmout();
 }

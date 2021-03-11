@@ -81,6 +81,7 @@
               <span class="badge badge-primary" id="totalAmount">Amount</span>
               <span class="badge badge-info" id="totalItems">Items</span>
             </a>
+
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <ul class="list-group" id="shoppingCartDom">
                 <!-- <li id="totalAmount" class="list-group-item total-amount">
@@ -88,6 +89,15 @@
                 </li> -->
               </ul>
             </div>
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              id="deleteCartBtn"
+              class="btn btn-danger rounded-pill"
+            >
+              Delete Cart
+            </button>
           </li>
         </ul>
       </div>
@@ -101,7 +111,7 @@
         />
       </form>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row py-5" id="entryPoint"></div>
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -129,11 +139,11 @@
            XX 3) When the button is pressed, change the style of the item and add it to another list
            XX 4) Add "skip" button next to each item
            XX 5) When pressed, the button should remove from the page the item not interesting from the user
-            6) Add a "search bar". When the user types more than 3 chars, you should filter the content of the page to show only the items with a matching name (hint: use .filter method)
-            7) Allow the user to delete items from the cart list
+           XX 6) Add a "search bar". When the user types more than 3 chars, you should filter the content of the page to show only the items with a matching name (hint: use .filter method)
+           XX 7) Allow the user to delete items from the cart list
             
             [EXTRA]
-            8) Add a "clean cart" button, to clean the whole list.
-            9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
-            10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book)
+           XX 8) Add a "clean cart" button, to clean the whole list.
+           XX 9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
+            XX 10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book)
         -->
