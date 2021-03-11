@@ -23,3 +23,16 @@ const shit = '💩',
             8) Add a "clean cart" button, to clean the whole list.
             9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
             10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book) */
+
+let bookStore = [];
+let cart = [];
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('https://striveschool-api.herokuapp.com/books');
+    const data = await res.json();
+    bookStore = [...data];
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
