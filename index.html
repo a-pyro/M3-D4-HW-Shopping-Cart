@@ -48,32 +48,65 @@
     <title>Hello, world!</title>
   </head>
   <body class="animate__animated animate__faster animate__fadeIn">
-    <!--
-            You are creating the "shopping cart experience" for a Online Marketplace.
-            You have the list of the available books from the current API:
-            https://striveschool-api.herokuapp.com/books
-            What you have to do is:
-            0) Get all the products from the API using a fetch
-            1) Display the list of items available on the page using template literals `` and .forEach
-            2) Add a "add to cart button"
-            3) When the button is pressed, change the style of the item and add it to another list
-            4) Add "skip" button next to each item
-            5) When pressed, the button should remove from the page the item not interesting from the user
-            6) Add a "search bar". When the user types more than 3 chars, you should filter the content of the page to show only the items with a matching name (hint: use .filter method)
-            7) Allow the user to delete items from the cart list
-            
-            [EXTRA]
-            8) Add a "clean cart" button, to clean the whole list.
-            9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
-            10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book)
-        -->
-    <div class="container">
-      <header id="header" class=""></header>
-
-      <main id="main" class=""></main>
-
-      <footer id="footer" class=""></footer>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Shopping Cart
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <form class="form-inline">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </nav>
+    <div class="container"></div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
