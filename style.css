@@ -125,3 +125,12 @@ h6 {
 .fas {
   cursor: pointer;
 }
+
+/* .dropdown-toggle::after {
+  display: none;
+} */
+
+#shoppingCartDom {
+  height: 50vh;
+  overflow: auto;
+}

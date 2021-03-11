@@ -49,9 +49,11 @@
   </head>
   <body class="">
     <nav
-      class="navbar navbar-expand-lg navbar-dark bg-transparent animate__animated animate__faster animate__bounceInDown"
+      class="navbar navbar-expand-lg navbar-dark sticky-top backdrop-blur animate__animated animate__faster animate__bounceInDown"
     >
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#"
+        ><i class="fas fa-book-reader fa-2x"></i
+      ></a>
       <button
         class="navbar-toggler"
         type="button"
@@ -75,15 +77,21 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Shopping Cart
+              <span class="badge badge-success">Shopping Cart</span>
+              <span class="badge badge-primary" id="totalAmount">Amount</span>
+              <span class="badge badge-info" id="totalItems">Items</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <ul class="list-group" id="shoppingCartDom"></ul>
+              <ul class="list-group" id="shoppingCartDom">
+                <!-- <li id="totalAmount" class="list-group-item total-amount">
+                  total
+                </li> -->
+              </ul>
             </div>
           </li>
         </ul>
       </div>
-      <li id="totalAmount" class="list-group-item total-amount">total</li>
+
       <form class="form-inline">
         <input
           class="form-control mr-sm-2"
@@ -91,7 +99,7 @@
           placeholder="Search"
           aria-label="Search"
         />
-        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">
           Search
         </button>
       </form>

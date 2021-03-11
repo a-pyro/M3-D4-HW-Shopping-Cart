@@ -23,14 +23,14 @@ const shit = '💩',
             8) Add a "clean cart" button, to clean the whole list.
             9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
             10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book) */
-let userCart = [];
 
+let userCart = [];
 const entryPoint = document.getElementById('entryPoint');
 const shoppingCartDom = document.getElementById('shoppingCartDom');
-
-window.addEventListener('DOMContentLoaded', getData);
+const totalItems = document.getElementById('totalItems');
 const totalAmount = document.getElementById('totalAmount');
 
+window.addEventListener('DOMContentLoaded', getData);
 async function getData() {
   try {
     const res = await fetch('https://striveschool-api.herokuapp.com/books');
@@ -112,11 +112,15 @@ function skipBook(e) {
 }
 
 function renderShoppingCart(userCart) {
-  shoppingCartDom.innerHTML = '';
-  userCart.forEach((book) => {
+  shoppingCartDom.innerHTML = userCart.reduce((acc, book) => {
+    const { asin, category, img: url, price, title } = book;
+    return acc + LiComponent(asin, category, url, price, title);
+  }, '');
+
+  /*  userCart.forEach((book) => {
     const { asin, category, img: url, price, title } = book;
     shoppingCartDom.innerHTML += LiComponent(asin, category, url, price, title);
-  });
+  }); */
 }
 
 function LiComponent(asin = 0, category = '', url = '', price, title) {
@@ -131,7 +135,6 @@ function addDeleteEvent() {
 }
 
 function removeFromCart(e) {
-  console.log(e.target);
   const li = e.target.closest('.list-group-item');
   const asin = li.querySelector('.asin-cart');
   const asinValue = asin.innerText;
@@ -151,5 +154,15 @@ function removeFromCart(e) {
 function calcTotalAmout() {
   const total =
     userCart.reduce((acc, cv) => acc + parseFloat(cv.price), 0) || 0;
-  totalAmount.innerText = `total ${total.toFixed(2)}`;
+  totalAmount.innerText = `Total ${total.toFixed(2)}€`;
+  totalItems.innerText = `${userCart.length} item${
+    userCart.length === 1 ? '' : 's'
+  }`;
 }
+
+// per dropdown
+$('#shoppingCartDom').on('click', function (event) {
+  // The event won't be propagated up to the document NODE and
+  // therefore delegated events won't be fired
+  event.stopPropagation();
+});
