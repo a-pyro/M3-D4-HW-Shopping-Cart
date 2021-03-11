@@ -31,6 +31,7 @@ const totalItems = document.getElementById('totalItems');
 const totalAmount = document.getElementById('totalAmount');
 
 window.addEventListener('DOMContentLoaded', getData);
+
 async function getData() {
   try {
     const res = await fetch('https://striveschool-api.herokuapp.com/books');
