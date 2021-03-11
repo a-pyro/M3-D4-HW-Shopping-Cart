@@ -23,11 +23,13 @@ const shit = '💩',
             8) Add a "clean cart" button, to clean the whole list.
             9) Create a second "detail page" for the product. When the user clicks on a product name, the app should redirect him to the secondary page, passing the ASIN in query string
             10) In page "detail" show some details of the selected product (https://striveschool-api.herokuapp.com/books/1940026091 to fetch the details of a specific book) */
+let userCart = [];
+
 const entryPoint = document.getElementById('entryPoint');
 const shoppingCartDom = document.getElementById('shoppingCartDom');
 
-let userCart = [];
 window.addEventListener('DOMContentLoaded', getData);
+const totalAmount = document.getElementById('totalAmount');
 
 async function getData() {
   try {
@@ -97,6 +99,7 @@ function addToCart(e) {
       console.log(userCart);
       renderShoppingCart(userCart);
       addDeleteEvent();
+      calcTotalAmout(userCart);
     })
     .catch((err) => console.log(err));
 }
@@ -128,7 +131,6 @@ function addDeleteEvent() {
 }
 
 function removeFromCart(e) {
-  e.preventDefault();
   console.log(e.target);
   const li = e.target.closest('.list-group-item');
   const asin = li.querySelector('.asin-cart');
@@ -137,8 +139,17 @@ function removeFromCart(e) {
   const itemtoRemove = userCart.findIndex((book) => book.asin === asinValue);
   userCart.splice(itemtoRemove, 1);
   renderShoppingCart(userCart);
+  addDeleteEvent();
+  console.log(userCart);
   // update ui
   const bookInUi = document.querySelector(`li[data-attribute="${asinValue}"]`);
   const card = bookInUi.closest('.card');
   card.classList.remove('added-to-cart');
+  calcTotalAmout();
+}
+
+function calcTotalAmout() {
+  const total =
+    userCart.reduce((acc, cv) => acc + parseFloat(cv.price), 0) || 0;
+  totalAmount.innerText = `total ${total.toFixed(2)}`;
 }
